@@ -23,7 +23,6 @@ fun RepositoryLibrary(modifier: Modifier = Modifier, onRepositoryClicked: (Long)
       Text(
         text = stringResource(id = R.string.repository_library),
         style = MaterialTheme.typography.h6,
-        fontWeight = FontWeight.Medium
       )
       Spacer(modifier = Modifier
         .fillMaxWidth()
