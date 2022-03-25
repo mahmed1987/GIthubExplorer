@@ -1,0 +1,91 @@
+def androidX_version = "1.2.0"
+def material_version = "1.3.0"
+def hilt_version = '2.38.1'
+def constraintLayout_version = "2.0.4"
+def navigation_version = "2.3.2"
+def androidX_kotlin = "1.3.2"
+def coroutine_version = "1.5.2"
+def gson_version = "2.8.6"
+def firebase_version = "29.0.3"
+def retrofit_gson_convertor = "2.6.2"
+def retrofit_version = "2.7.1"
+def junit_version = "4.13.1"
+def mockito_version = "2.25.0"
+def google_truth_version = "1.1"
+def local_broadcast_manager_version = "1.0.0"
+def ktx_version = "2.5.0"
+def compose_live_data = "1.0.5"
+def compose_activity_version = "1.3.1"
+def compose_material_version = "1.0.1"
+def compose_animations_version = "1.0.1"
+def compose_tooling_support_version = "1.0.1"
+def compose_version = "1.0.5"
+def compose_viewmodels_version = "1.0.0-alpha07"
+def compose_theme_adapter_version = "1.0.1"
+def coil_version = "1.3.0"
+def accompanist_version = "0.18.0"
+def compose_nav_version = "2.4.0-alpha06"
+def compose_util_version = "1.0.3"
+
+
+// When using a MDC theme
+ext.library = [
+        kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+        androidX               : "androidx.appcompat:appcompat:$androidX_version",
+        androidXKotlin         : "androidx.core:core-ktx:$androidX_kotlin",
+        material               : "com.google.android.material:material:$material_version",
+        constraintLayout       : "androidx.constraintlayout:constraintlayout:$constraintLayout_version",
+        navigation             : "androidx.navigation:navigation-fragment-ktx:$navigation_version",
+        navigationUI           : "androidx.navigation:navigation-ui-ktx:$navigation_version",
+        coroutines             : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version",
+        gson                   : "com.google.code.gson:gson:$gson_version",
+        multiDex               : 'com.android.support:multidex:1.0.3',
+
+
+        firebase               : "com.google.firebase:firebase-bom:$firebase_version",
+        firebaseAuth           : 'com.google.firebase:firebase-auth-ktx',
+        firebaseAnalytics      : 'com.google.firebase:firebase-analytics-ktx',
+
+        facebook               : "com.facebook.android:facebook-login:latest.release",
+        googlePlayAuth         : 'com.google.android.gms:play-services-auth:19.0.0',
+        glide                  : 'com.github.bumptech.glide:glide:4.11.0',
+        circleImageView        : 'de.hdodenhof:circleimageview:3.1.0',
+        localBroadcastManager  : "androidx.localbroadcastmanager:localbroadcastmanager:$local_broadcast_manager_version",
+        worker                 : "androidx.work:work-runtime-ktx:$ktx_version",
+
+        //compose dependencies
+        composeUi              : "androidx.compose.ui:ui:$compose_version",
+        composeMaterialDesign  : "androidx.compose.material:material:$compose_version",
+        composeToolingPreview  : "androidx.compose.ui:ui-tooling-preview::$compose_version",
+        composeActivity        : "androidx.activity:activity-compose:$compose_activity_version",
+        composeAnimations      : "androidx.compose.animation:animation:$compose_animations_version",
+        composeTooling         : "androidx.compose.ui:ui-tooling:$compose_tooling_support_version",
+        composeViewModels      : "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_viewmodels_version",
+        composeMdcAdapter      : "com.google.android.material:compose-theme-adapter:$compose_theme_adapter_version",
+        composeNavigation      : "androidx.navigation:navigation-compose:$compose_nav_version",
+        composeIcons           : "androidx.compose.material:material-icons-extended:$compose_material_version",
+        coil                   : "io.coil-kt:coil-compose:$coil_version",
+        accompanistInsets      : "com.google.accompanist:accompanist-insets:$accompanist_version",
+        composeUtils           : "androidx.compose.ui:ui-util:$compose_util_version",
+        constraintLayoutCompose: "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02",
+        composeLiveData        : "androidx.compose.runtime:runtime-livedata:$compose_live_data",
+
+
+        //retrofit
+        retrofit               : "com.squareup.retrofit2:retrofit:$retrofit_version",
+        retrofitGsonConvertor  : "com.squareup.retrofit2:converter-gson:$retrofit_gson_convertor",
+
+        //hilt
+        hilt                   : "com.google.dagger:hilt-android:$hilt_version",
+        hiltCompiler           : "com.google.dagger:hilt-android-compiler:$hilt_version",
+        hiltNavigation         : "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+]
+
+ext.testLibs = [
+        junit      : "junit:junit:$junit_version",
+        mockito    : "org.mockito:mockito-core:$mockito_version",
+        googleTruth: "com.google.truth:truth:$google_truth_version",
+]
+
+

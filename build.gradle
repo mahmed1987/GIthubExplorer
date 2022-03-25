@@ -1,0 +1,108 @@
+buildscript {
+    ext {
+        compose_version = '1.0.1'
+        kotlin_version = '1.6.10'
+        navigation_version = '2.3.2'
+        hilt_version = '2.38.1'
+
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+apply from: 'dependency_list.gradle'
+
+subprojects {
+    if (name == "app") {
+        apply plugin: "com.android.application"
+    } else {
+        apply plugin: "com.android.library"
+    }
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-kapt'
+    apply plugin: 'kotlin-parcelize'
+    apply plugin: "androidx.navigation.safeargs.kotlin"
+    apply plugin: "dagger.hilt.android.plugin"
+    android {
+        compileSdkVersion 31
+        defaultConfig {
+            minSdkVersion 21
+            targetSdkVersion 31
+            multiDexEnabled true
+            vectorDrawables.useSupportLibrary = true
+        }
+
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+
+        buildFeatures {
+            dataBinding = true
+            viewBinding = true
+            compose = true
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        composeOptions {
+            kotlinCompilerExtensionVersion '1.1.0'
+        }
+    }
+    kapt {
+        useBuildCache = true
+        correctErrorTypes = true
+    }
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation library.kotlin
+        implementation library.material
+        implementation library.androidX
+        implementation library.coroutines
+        implementation library.navigation
+        implementation library.navigationUI
+        implementation library.gson
+        implementation library.constraintLayout
+        implementation library.glide
+        implementation library.circleImageView
+        implementation library.localBroadcastManager
+        implementation library.composeActivity
+        implementation library.composeMaterialDesign
+        implementation library.composeAnimations
+        implementation library.composeTooling
+        implementation library.composeViewModels
+        implementation library.composeLiveData
+        implementation library.composeMdcAdapter
+        implementation library.accompanistInsets
+        implementation library.accompanistInsets
+        implementation library.coil
+        implementation library.composeNavigation
+        implementation library.constraintLayoutCompose
+        implementation library.composeUtils
+
+        implementation library.retrofit
+        implementation library.retrofitGsonConvertor
+
+        implementation library.hilt
+        implementation library.hiltNavigation
+        kapt library.hiltCompiler
+
+        testImplementation testLibs.junit
+        testImplementation testLibs.mockito
+        testImplementation testLibs.googleTruth
+
+    }
+
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
