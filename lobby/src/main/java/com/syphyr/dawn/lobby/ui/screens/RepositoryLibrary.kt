@@ -196,7 +196,7 @@ fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
         contentDescription = "The search icon"
       )
     },
-    label = { Text(text = stringResource(id = R.string.search_for_repository)) },
+    label = { Text(text = stringResource(id = R.string.search_for_repository), style = MaterialTheme.typography.subtitle1) },
   )
 }
 
