@@ -19,7 +19,9 @@ import com.syphyr.dawn.githubexplorer.common.state.AppState
 import com.syphyr.dawn.githubexplorer.common.state.rememberAppState
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
 import com.syphyr.dawn.lobby.navigation.appNavGraph
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LobbyActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

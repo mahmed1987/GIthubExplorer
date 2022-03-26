@@ -16,7 +16,7 @@ object NetworkModule {
 
   @Provides
   @Singleton
-  fun provideRetrofit() {
+  fun provideRetrofit() :Retrofit {
     val httpClient = OkHttpClient.Builder()
 
     val retroBuilder =
@@ -27,6 +27,6 @@ object NetworkModule {
       httpClient.readTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS).build()
     )
-    retroBuilder.build()
+   return retroBuilder.build()
   }
 }
