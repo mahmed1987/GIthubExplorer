@@ -25,6 +25,9 @@ import com.syphyr.dawn.githubexplorer.common.system.Failure
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
 import com.syphyr.dawn.githubexplorer.views.Repository
 import com.syphyr.dawn.lobby.ui.viewmodel.GithubViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 @Composable
 fun RepositoryLibrary(
@@ -48,6 +51,7 @@ fun RepositoryLibrary(
           .height(20.dp)
       )
       SearchBox { query ->
+        TODO("Figure out how to debounce")
         viewModel.searchRepositories(query)
       }
       Column(
@@ -61,7 +65,6 @@ fun RepositoryLibrary(
     }
   }
 }
-
 
 @Composable
 fun ColumnScope.Content(viewModel: GithubViewModel) {
