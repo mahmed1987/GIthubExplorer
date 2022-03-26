@@ -21,7 +21,7 @@ object NetworkModule {
 
     val retroBuilder =
       Retrofit.Builder()
-        .baseUrl(BuildConfig.API_ENDPOINT)
+        .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create())
     retroBuilder.client(
       httpClient.readTimeout(60, TimeUnit.SECONDS)
