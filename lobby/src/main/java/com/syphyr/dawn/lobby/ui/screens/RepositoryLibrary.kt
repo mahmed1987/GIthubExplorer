@@ -1,6 +1,7 @@
 package com.syphyr.dawn.lobby.ui.screens
 
 import android.graphics.Color
+import android.util.Log
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import com.syphyr.dawn.lobby.ui.viewmodel.GithubViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
 
 @Composable
 fun RepositoryLibrary(
@@ -50,8 +52,9 @@ fun RepositoryLibrary(
           .fillMaxWidth()
           .height(20.dp)
       )
-      SearchBox { query ->
-        TODO("Figure out how to debounce")
+      var currentSearchQuery by rememberSaveable { mutableStateOf("") }
+      SearchBox(currentSearchQuery) { query ->
+        currentSearchQuery = query
         viewModel.searchRepositories(query)
       }
       Column(
@@ -64,6 +67,7 @@ fun RepositoryLibrary(
       }
     }
   }
+
 }
 
 @Composable

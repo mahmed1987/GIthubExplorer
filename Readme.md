@@ -1,4 +1,10 @@
-
+Tech stack used
+Jetpack compose
+Hilt
+Retrofit
+ViewModels
+Repositories
+Kotlin Flows
 # DawnHealth app challenge
 ###### A demo showcasing the industry standard approach (Multi modules , MVVM , CLEAN) for developing in android
 
