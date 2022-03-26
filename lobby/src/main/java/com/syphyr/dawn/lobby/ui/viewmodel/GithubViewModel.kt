@@ -1,23 +1,17 @@
 package com.syphyr.dawn.lobby.ui.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.*
-import com.syphyr.dawn.githubexplorer.business.base.Args
-import com.syphyr.dawn.githubexplorer.business.base.None
 import com.syphyr.dawn.githubexplorer.business.base.StringArg
 import com.syphyr.dawn.githubexplorer.business.github.SearchRepository
 import com.syphyr.dawn.githubexplorer.common.system.Failure
-import com.syphyr.dawn.githubexplorer.views.Repository
+import com.syphyr.dawn.githubexplorer.views.repositories.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel

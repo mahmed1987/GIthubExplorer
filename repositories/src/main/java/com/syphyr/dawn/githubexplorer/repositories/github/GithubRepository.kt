@@ -2,7 +2,7 @@ package com.syphyr.dawn.githubexplorer.repositories.github
 
 import com.syphyr.dawn.githubexplorer.common.functional.Either
 import com.syphyr.dawn.githubexplorer.common.system.Failure
-import com.syphyr.dawn.githubexplorer.views.Repository
+import com.syphyr.dawn.githubexplorer.views.repositories.Repository
 import javax.inject.Inject
 import javax.inject.Singleton
 
