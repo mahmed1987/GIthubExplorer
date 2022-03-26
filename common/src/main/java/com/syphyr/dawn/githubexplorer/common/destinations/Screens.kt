@@ -24,5 +24,5 @@ enum class Screens(
   val route: String,
 ) {
   REPOSITORY_LIBRARY(R.string.repository_library,  "home/repository"),
-  REPOSITORY_DETAIL(R.string.repository_details,  "home/repository/details"),
+  REPOSITORY_DETAIL(R.string.repository_details,  "home/repository/details?selectedRepo={selectedRepo}"),
 }

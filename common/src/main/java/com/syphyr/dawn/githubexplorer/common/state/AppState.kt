@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.*
 import androidx.navigation.compose.rememberNavController
+import com.syphyr.dawn.githubexplorer.common.destinations.Screens
 import com.syphyr.dawn.githubexplorer.common.system.Failure
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
@@ -57,42 +58,18 @@ class AppState(
   }
 
 
-
-
-  // ----------------------------------------------------------
-  // Navigation state source of truth
-  // ----------------------------------------------------------
-
-  val currentRoute: String?
-    get() = navController.currentDestination?.route
-
-
-
-  private fun handleFailure(failure: Failure) {
-    coroutineScope.launch {
-      when (failure) {
-        is Failure.NoResult -> scaffoldState.snackbarHostState.showSnackbar("NO results")
-      }
-    }
+  fun navigateToRepositoryDetails(repositoryDetailsJson: String) {
+    navController.navigate(
+      Screens.REPOSITORY_DETAIL.route.replace(
+        "{selectedRepo}",
+        repositoryDetailsJson
+      )
+    )
   }
-
-
-
-
-  fun navigateToRepositoryDetail(repositoryId: Long, from: NavBackStackEntry) {
-    // In order to discard duplicated navigation events, we check the Lifecycle
-//        if (from.lifecycleIsResumed()) {
-//            navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId")
-//        }
-  }
-
-
-
-
-
-
-
 }
+
+
+
 
 private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
   return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph

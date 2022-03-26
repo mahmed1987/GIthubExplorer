@@ -54,15 +54,16 @@ fun MainAppScaffold(appState: AppState) {
 
     scaffoldState = appState.scaffoldState
   ) { innerPaddingModifier ->
-      NavHost(
-        navController = appState.navController,
-        startDestination = TopLevelDestinations.HOME_ROUTE,
-        modifier = Modifier.padding(innerPaddingModifier)
-      ) {
-        appNavGraph(onRepositoryClicked = {id,from->})
-      }
+    NavHost(
+      navController = appState.navController,
+      startDestination = TopLevelDestinations.HOME_ROUTE,
+      modifier = Modifier.padding(innerPaddingModifier)
+    ) {
+      appNavGraph(onRepositoryClicked = { id, from -> appState.navigateToRepositoryDetails("ahmed") })
     }
+  }
 }
+
 @Composable
 fun Greeting(name: String) {
   Text(text = "Hello $name!")
