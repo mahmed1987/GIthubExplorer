@@ -3,9 +3,13 @@ package com.syphyr.dawn.lobby.ui.screens
 import android.graphics.Color
 import android.util.Log
 import android.widget.Space
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -15,12 +19,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberImagePainter
 import com.syphyr.dawn.githubexplorer.common.R
 import com.syphyr.dawn.githubexplorer.common.system.Failure
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
@@ -84,11 +91,50 @@ fun ColumnScope.Content(viewModel: GithubViewModel) {
 
 @Composable
 fun ColumnScope.ShowSuccessUi(repositories: List<Repository>) {
-
+  LazyColumn {
+    item {
+      RepositoryItem()
+    }
+  }
 }
 
 @Composable
 fun ShowLoadingUi() {
+}
+
+@Composable
+fun RepositoryItem() {
+  Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+    Image(
+      painter =  rememberImagePainter(
+        data = "https://source.unsplash.com/pGM4sjt_BdQ",
+        builder = {
+          crossfade(true)
+          placeholder(drawableResId = R.drawable.placeholder)
+        }
+      ),
+      contentDescription = "RepositoryImage",
+      modifier = Modifier
+        .clip(RoundedCornerShape(10.dp))
+        .size(60.dp)
+        .clip(RoundedCornerShape(10.dp))
+
+    )
+    Spacer(modifier = Modifier.width(15.dp))
+    Column() {
+      Text(text = "Tetris", style = MaterialTheme.typography.subtitle1)
+      Text(text = "This is a repo", style = MaterialTheme.typography.subtitle2)
+    }
+  }
+
+}
+
+@Preview
+@Composable
+fun PreviewRepositoryItem() {
+  GithubExplorerTheme {
+    RepositoryItem()
+  }
 }
 
 @Composable
