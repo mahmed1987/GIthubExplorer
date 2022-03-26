@@ -40,6 +40,9 @@ fun NavGraphBuilder.addHomeGraph(
   composable(Screens.REPOSITORY_LIBRARY.route) { from ->
     RepositoryLibrary(modifier, onRepositoryClicked = { id -> onRepositoryClicked(id, from) })
   }
+  composable(Screens.REPOSITORY_DETAIL.route) { from ->
+    RepositoryLibrary(modifier, onRepositoryClicked = { id -> onRepositoryClicked(id, from) })
+  }
 
 
 }
