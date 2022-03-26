@@ -91,6 +91,7 @@ subprojects {
 
         implementation library.retrofit
         implementation library.retrofitGsonConvertor
+        implementation library.okHttp
 
         implementation library.hilt
         implementation library.hiltNavigation

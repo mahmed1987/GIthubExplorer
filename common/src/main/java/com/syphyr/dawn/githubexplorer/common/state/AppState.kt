@@ -71,9 +71,7 @@ class AppState(
   private fun handleFailure(failure: Failure) {
     coroutineScope.launch {
       when (failure) {
-        is Failure.Login -> scaffoldState.snackbarHostState.showSnackbar(failure.reason)
-        is Failure.Android -> TODO()
-        is Failure.Firestore -> TODO()
+        is Failure.NoResult -> scaffoldState.snackbarHostState.showSnackbar("NO results")
       }
     }
   }

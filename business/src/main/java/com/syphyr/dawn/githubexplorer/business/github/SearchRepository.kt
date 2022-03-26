@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class SearchRepository @Inject constructor(private val githubDataSource: GithubDataSource) :
   UseCase<StringArg, List<Repository>>() {
   override suspend fun run(param: StringArg): Either<Failure, List<Repository>> {
-    githubDataSource.repositories(param.input)
-    return Either.Left(Failure.Android("a", 1))
+//    githubDataSource.repositories(param.input)
+    return Either.Right(listOf(Repository(1, "Ahmed"), Repository(2, "Muhammad")))
   }
 }

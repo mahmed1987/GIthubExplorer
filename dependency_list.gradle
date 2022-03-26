@@ -9,6 +9,7 @@ def gson_version = "2.8.6"
 def firebase_version = "29.0.3"
 def retrofit_gson_convertor = "2.6.2"
 def retrofit_version = "2.7.1"
+def okHttp_version = "4.9.2"
 def junit_version = "4.13.1"
 def mockito_version = "2.25.0"
 def google_truth_version = "1.1"
@@ -74,6 +75,8 @@ ext.library = [
         //retrofit
         retrofit               : "com.squareup.retrofit2:retrofit:$retrofit_version",
         retrofitGsonConvertor  : "com.squareup.retrofit2:converter-gson:$retrofit_gson_convertor",
+        //OkHttp
+        okHttp                 : "com.squareup.okhttp3:okhttp:$okHttp_version",
 
         //hilt
         hilt                   : "com.google.dagger:hilt-android:$hilt_version",

@@ -16,5 +16,8 @@ android {
 dependencies {
     implementation project(":common")
     implementation project(":lobby")
+    implementation project(":repositories")
+    implementation project(":network")
+    implementation project(":business")
 
 }
