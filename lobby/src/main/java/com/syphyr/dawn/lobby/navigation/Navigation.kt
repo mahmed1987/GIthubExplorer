@@ -22,14 +22,6 @@ fun NavGraphBuilder.appNavGraph(
   ) {
     addHomeGraph(onRepositoryClicked = onRepositoryClicked)
   }
-//    composable(
-//        "${TopLevelDestinations.SNACK_DETAIL_ROUTE}/{${MainDestinations.SNACK_ID_KEY}}",
-//        arguments = listOf(navArgument(MainDestinations.SNACK_ID_KEY) { type = NavType.LongType })
-//    ) { backStackEntry ->
-//        val arguments = requireNotNull(backStackEntry.arguments)
-//        val snackId = arguments.getLong(MainDestinations.SNACK_ID_KEY)
-//        SnackDetail(snackId, upPress)
-//    }
 }
 
 

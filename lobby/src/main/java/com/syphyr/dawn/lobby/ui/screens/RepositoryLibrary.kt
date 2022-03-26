@@ -2,6 +2,7 @@ package com.syphyr.dawn.lobby.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,7 +25,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import coil.size.Scale
 import com.syphyr.dawn.githubexplorer.common.R
 import com.syphyr.dawn.githubexplorer.common.system.Failure
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
@@ -62,7 +62,7 @@ fun RepositoryLibrary(
           .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        Content(viewModel)
+        Content(viewModel, onRepositoryClicked)
       }
     }
   }
@@ -70,19 +70,19 @@ fun RepositoryLibrary(
 }
 
 @Composable
-fun ColumnScope.Content(viewModel: GithubViewModel) {
+fun ColumnScope.Content(viewModel: GithubViewModel, onRepositoryClicked: (Long) -> Unit) {
   val uiState by viewModel.uiState.observeAsState()
   uiState?.let { state ->
     when (state) {
       is GithubViewModel.UiState.Error -> ShowErrorUi(state.failure)
       GithubViewModel.UiState.Loading -> ShowLoadingUi()
-      is GithubViewModel.UiState.Success -> ShowSuccessUi(state.data)
+      is GithubViewModel.UiState.Success -> ShowSuccessUi(state.data, onRepositoryClicked)
     }
   }
 }
 
 @Composable
-fun ColumnScope.ShowSuccessUi(repositories: List<Repository>) {
+fun ColumnScope.ShowSuccessUi(repositories: List<Repository>, onRepositoryClicked: (Long) -> Unit) {
   Column(modifier = Modifier.fillMaxSize()) {
     LazyColumn {
       item {
@@ -91,7 +91,7 @@ fun ColumnScope.ShowSuccessUi(repositories: List<Repository>) {
         Spacer(modifier = Modifier.height(20.dp))
       }
       items(repositories) { repository ->
-        RepositoryItem(repository)
+        RepositoryItem(repository, onRepositoryClicked)
         Spacer(modifier = Modifier.height(24.dp))
       }
     }
@@ -113,10 +113,13 @@ fun ShowLoadingUi() {
 }
 
 @Composable
-fun RepositoryItem(repository: Repository) {
+fun RepositoryItem(repository: Repository, onRepositoryClicked: (Long) -> Unit) {
   Row(
-    modifier = Modifier.fillMaxWidth()
-  ) {
+    modifier = Modifier
+      .clickable(onClick = { onRepositoryClicked(1) })
+      .fillMaxWidth(),
+
+    ) {
     RemoteImage(
       imageUrl = "https://source.unsplash.com/pGM4sjt_BdQ",
     )
@@ -131,7 +134,7 @@ fun RepositoryItem(repository: Repository) {
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun RemoteImage(imageUrl:String){
+fun RemoteImage(imageUrl: String) {
   Box(contentAlignment = Alignment.Center) {
     val painter = rememberImagePainter(data = imageUrl)
     Image(
@@ -196,7 +199,12 @@ fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
         contentDescription = "The search icon"
       )
     },
-    label = { Text(text = stringResource(id = R.string.search_for_repository), style = MaterialTheme.typography.subtitle1) },
+    label = {
+      Text(
+        text = stringResource(id = R.string.search_for_repository),
+        style = MaterialTheme.typography.subtitle1
+      )
+    },
   )
 }
 
@@ -212,7 +220,7 @@ fun PreviewRepositoryLibrary() {
 @Composable
 fun PreviewRepositoryItem() {
   GithubExplorerTheme {
-    RepositoryItem(Repository(1, "Ahmed"))
+    RepositoryItem(Repository(1, "Ahmed")){}
   }
 }
 
