@@ -1,5 +1,9 @@
 package com.syphyr.dawn.lobby.ui.screens
 
+import android.graphics.Color
+import android.widget.Space
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -8,8 +12,11 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,7 +33,11 @@ fun RepositoryLibrary(
   viewModel: GithubViewModel = hiltViewModel()
 ) {
   Surface(color = MaterialTheme.colors.background) {
-    Column(Modifier.padding(20.dp, 32.dp, 20.dp, 0.dp)) {
+    Column(
+      Modifier
+        .padding(20.dp, 32.dp, 20.dp, 0.dp)
+        .fillMaxSize()
+    ) {
       Text(
         text = stringResource(id = R.string.repository_library),
         style = MaterialTheme.typography.h6,
@@ -36,22 +47,36 @@ fun RepositoryLibrary(
           .fillMaxWidth()
           .height(20.dp)
       )
-      SearchBox()
-    }
-
-    val uiState by viewModel.uiState.observeAsState()
-    uiState?.let { state ->
-      when (state) {
-        is GithubViewModel.UiState.Error -> ShowErrorUi(state.failure)
-        GithubViewModel.UiState.Loading -> ShowLoadingUi()
-        is GithubViewModel.UiState.Success -> ShowSuccessUi(state.data)
+      SearchBox { query ->
+        viewModel.searchRepositories(query)
+      }
+      Column(
+        modifier = Modifier
+          .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        Content(viewModel)
       }
     }
   }
 }
 
+
 @Composable
-fun ShowSuccessUi(repositories: List<Repository>) {
+fun ColumnScope.Content(viewModel: GithubViewModel) {
+  val uiState by viewModel.uiState.observeAsState()
+  uiState?.let { state ->
+    when (state) {
+      is GithubViewModel.UiState.Error -> ShowErrorUi(state.failure)
+      GithubViewModel.UiState.Loading -> ShowLoadingUi()
+      is GithubViewModel.UiState.Success -> ShowSuccessUi(state.data)
+    }
+  }
+}
+
+@Composable
+fun ColumnScope.ShowSuccessUi(repositories: List<Repository>) {
 
 }
 
@@ -62,7 +87,21 @@ fun ShowLoadingUi() {
 @Composable
 fun ShowErrorUi(failure: Failure) {
 
-
+  Image(
+    painter = painterResource(id = com.syphyr.dawn.lobby.R.drawable.ic_no_results),
+    contentDescription = "Empty screen"
+  )
+  Spacer(modifier = Modifier.height(30.dp))
+  Text(
+    text = stringResource(id = R.string.a_little_empty),
+    style = MaterialTheme.typography.subtitle1
+  )
+  Spacer(modifier = Modifier.height(10.dp))
+  Text(
+    text = stringResource(id = R.string.empty_list_caption),
+    textAlign = TextAlign.Center,
+    style = MaterialTheme.typography.subtitle2
+  )
 }
 
 @Composable
@@ -71,13 +110,11 @@ fun OnSuccess(repositories: List<Repository> = listOf()) {
 }
 
 @Composable
-fun SearchBox() {
-  var password by rememberSaveable { mutableStateOf("") }
-
+fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
   TextField(
     modifier = Modifier.fillMaxWidth(),
-    value = password,
-    onValueChange = { password = it },
+    value = value,
+    onValueChange = onValueChange,
     label = { Text("Enter password") },
   )
 }
