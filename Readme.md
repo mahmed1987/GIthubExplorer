@@ -11,6 +11,7 @@
 5. ViewModels
 6. Kotlin Flows
 7. Jetpack Navigation for compose
+8. Dark/Light Mode Support
 
 ## Current Limitations
 
