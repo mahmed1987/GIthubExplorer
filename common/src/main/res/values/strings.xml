@@ -5,4 +5,9 @@
     <string name="search_for_repository">Search for repository</string>
     <string name="a_little_empty">A little empty</string>
     <string name="empty_list_caption">Search for a repository and\nsave it as favourite</string>
+    <string name="forks">Forks</string>
+    <string name="issues">Issues</string>
+    <string name="starred_by">Starred By</string>
+    <string name="latest_release_version">Latest release version</string>
+
 </resources>

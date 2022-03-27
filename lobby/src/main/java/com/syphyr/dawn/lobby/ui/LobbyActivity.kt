@@ -59,7 +59,7 @@ fun MainAppScaffold(appState: AppState) {
       startDestination = TopLevelDestinations.HOME_ROUTE,
       modifier = Modifier.padding(innerPaddingModifier)
     ) {
-      appNavGraph(onRepositoryClicked = { id, from -> appState.navigateToRepositoryDetails("ahmed") })
+      appNavGraph(onRepositoryClicked = appState::navigateToRepositoryDetails, onBackPress = appState::upPress)
     }
   }
 }

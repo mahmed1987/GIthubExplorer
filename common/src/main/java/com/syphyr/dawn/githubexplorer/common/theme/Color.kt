@@ -22,4 +22,4 @@ val GhostWhite = Color(0xFFF8F8FF)
 val Woodsmoke = Color(0xFF0E1111)
 val Shark = Color(0xFF202123)
 val Selago = Color(0xFFF0F0FE)
-
+val Whisper = Color(0XFFE6E6E6)

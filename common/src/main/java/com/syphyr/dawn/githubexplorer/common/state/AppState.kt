@@ -66,6 +66,11 @@ class AppState(
       )
     )
   }
+
+
+  fun upPress() {
+    navController.navigateUp()
+  }
 }
 
 

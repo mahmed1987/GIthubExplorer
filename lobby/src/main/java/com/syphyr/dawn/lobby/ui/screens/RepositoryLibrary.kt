@@ -18,8 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
@@ -28,13 +30,13 @@ import coil.compose.rememberImagePainter
 import com.syphyr.dawn.githubexplorer.common.R
 import com.syphyr.dawn.githubexplorer.common.system.Failure
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
-import com.syphyr.dawn.githubexplorer.views.repositories.Repository
+import com.syphyr.dawn.githubexplorer.views.repositories.RepositoryView
 import com.syphyr.dawn.lobby.ui.viewmodel.GithubViewModel
 
 @Composable
 fun RepositoryLibrary(
   modifier: Modifier = Modifier,
-  onRepositoryClicked: (Long) -> Unit,
+  onRepositoryClicked: (String) -> Unit,
   viewModel: GithubViewModel = hiltViewModel()
 ) {
   Surface(color = MaterialTheme.colors.background) {
@@ -68,9 +70,29 @@ fun RepositoryLibrary(
   }
 
 }
-
 @Composable
-fun ColumnScope.Content(viewModel: GithubViewModel, onRepositoryClicked: (Long) -> Unit) {
+fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
+  TextField(
+    modifier = Modifier.fillMaxWidth(),
+    value = value,
+    onValueChange = onValueChange,
+    leadingIcon = {
+      Image(
+        painter = painterResource(id = com.syphyr.dawn.lobby.R.drawable.ic_search),
+        contentDescription = "The search icon"
+      )
+    },
+    label = {
+      Text(
+        text = stringResource(id = R.string.search_for_repository),
+        style = MaterialTheme.typography.subtitle1,
+        fontWeight = FontWeight.Normal
+      )
+    },
+  )
+}
+@Composable
+fun Content(viewModel: GithubViewModel, onRepositoryClicked: (String) -> Unit) {
   val uiState by viewModel.uiState.observeAsState()
   uiState?.let { state ->
     when (state) {
@@ -82,15 +104,18 @@ fun ColumnScope.Content(viewModel: GithubViewModel, onRepositoryClicked: (Long) 
 }
 
 @Composable
-fun ColumnScope.ShowSuccessUi(repositories: List<Repository>, onRepositoryClicked: (Long) -> Unit) {
+fun ShowSuccessUi(
+  repositoryViews: List<RepositoryView>,
+  onRepositoryClicked: (String) -> Unit
+) {
   Column(modifier = Modifier.fillMaxSize()) {
     LazyColumn {
       item {
         Spacer(modifier = Modifier.height(40.dp))
-        ResultsCountItem(repositories)
+        ResultsCountItem(repositoryViews)
         Spacer(modifier = Modifier.height(20.dp))
       }
-      items(repositories) { repository ->
+      items(repositoryViews) { repository ->
         RepositoryItem(repository, onRepositoryClicked)
         Spacer(modifier = Modifier.height(24.dp))
       }
@@ -98,64 +123,9 @@ fun ColumnScope.ShowSuccessUi(repositories: List<Repository>, onRepositoryClicke
   }
 
 }
-
-@Composable
-private fun ResultsCountItem(repositories: List<Repository>) {
-  Text(
-    text = "${repositories.size} results", style = MaterialTheme.typography.subtitle2.copy(
-      Color(0xFF999DA8)
-    )
-  )
-}
-
 @Composable
 fun ShowLoadingUi() {
 }
-
-@Composable
-fun RepositoryItem(repository: Repository, onRepositoryClicked: (Long) -> Unit) {
-  Row(
-    modifier = Modifier
-      .clickable(onClick = { onRepositoryClicked(1) })
-      .fillMaxWidth(),
-
-    ) {
-    RemoteImage(
-      imageUrl = "https://source.unsplash.com/pGM4sjt_BdQ",
-    )
-    Spacer(modifier = Modifier.width(15.dp))
-    Column() {
-      Text(text = "Tetris", style = MaterialTheme.typography.subtitle1)
-      Text(text = "This is a repo", style = MaterialTheme.typography.subtitle2)
-    }
-  }
-}
-
-
-@OptIn(ExperimentalCoilApi::class)
-@Composable
-fun RemoteImage(imageUrl: String) {
-  Box(contentAlignment = Alignment.Center) {
-    val painter = rememberImagePainter(data = imageUrl)
-    Image(
-      painter = painter,
-      contentScale = ContentScale.Crop,
-      contentDescription = null,
-      modifier = Modifier
-        .size(45.dp)
-        .clip(RoundedCornerShape(5.dp))
-        .background(Color(0xFFE9FAFA))
-    )
-    if (painter.state !is ImagePainter.State.Success) {
-      Image(
-        painter = painterResource(id = com.syphyr.dawn.lobby.R.drawable.ic_folder),
-        contentDescription = null,
-      )
-    }
-  }
-}
-
-
 @Composable
 fun ShowErrorUi(failure: Failure) {
   Column(
@@ -181,32 +151,60 @@ fun ShowErrorUi(failure: Failure) {
   }
 
 }
-
 @Composable
-fun OnSuccess(repositories: List<Repository> = listOf()) {
-
-}
-
-@Composable
-fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
-  TextField(
-    modifier = Modifier.fillMaxWidth(),
-    value = value,
-    onValueChange = onValueChange,
-    leadingIcon = {
-      Image(
-        painter = painterResource(id = com.syphyr.dawn.lobby.R.drawable.ic_search),
-        contentDescription = "The search icon"
-      )
-    },
-    label = {
-      Text(
-        text = stringResource(id = R.string.search_for_repository),
-        style = MaterialTheme.typography.subtitle1
-      )
-    },
+private fun ResultsCountItem(repositoryViews: List<RepositoryView>) {
+  Text(
+    text = "${repositoryViews.size} results", style = MaterialTheme.typography.subtitle2.copy(
+      Color(0xFF999DA8)
+    )
   )
 }
+
+
+@Composable
+fun RepositoryItem(repositoryView: RepositoryView, onRepositoryClicked: (String) -> Unit) {
+  Row(
+    modifier = Modifier
+      .clickable(onClick = { onRepositoryClicked("") })
+      .fillMaxWidth(),
+
+    ) {
+    RemoteImage(
+      imageUrl = "https://source.unsplash.com/pGM4sjt_BdQ",
+      size = 45.dp
+    )
+    Spacer(modifier = Modifier.width(15.dp))
+    Column() {
+      Text(text = "Tetris", style = MaterialTheme.typography.subtitle1)
+      Text(text = "This is a repo", style = MaterialTheme.typography.subtitle2)
+    }
+  }
+}
+
+
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+fun RemoteImage(imageUrl: String,size:Dp) {
+  Box(contentAlignment = Alignment.Center) {
+    val painter = rememberImagePainter(data = imageUrl)
+    Image(
+      painter = painter,
+      contentScale = ContentScale.Crop,
+      contentDescription = null,
+      modifier = Modifier
+        .size(size)
+        .clip(RoundedCornerShape(5.dp))
+        .background(Color(0xFFE9FAFA))
+    )
+    if (painter.state !is ImagePainter.State.Success) {
+      Image(
+        painter = painterResource(id = com.syphyr.dawn.lobby.R.drawable.ic_folder),
+        contentDescription = null,
+      )
+    }
+  }
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -220,7 +218,17 @@ fun PreviewRepositoryLibrary() {
 @Composable
 fun PreviewRepositoryItem() {
   GithubExplorerTheme {
-    RepositoryItem(Repository(1, "Ahmed")){}
+    RepositoryItem(RepositoryView(
+      1,
+      "This is something",
+      "",
+      "Achi Repo hai",
+      "Assembly",
+      33,
+      33,
+      33,
+      2.toDouble()
+    )) {}
   }
 }
 

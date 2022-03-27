@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.syphyr.dawn.githubexplorer.business.base.StringArg
 import com.syphyr.dawn.githubexplorer.business.github.SearchRepository
 import com.syphyr.dawn.githubexplorer.common.system.Failure
-import com.syphyr.dawn.githubexplorer.views.repositories.Repository
+import com.syphyr.dawn.githubexplorer.views.repositories.RepositoryView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -58,7 +58,7 @@ class GithubViewModel @Inject constructor(
 
   sealed class UiState {
     object Loading : UiState()
-    class Success(val data: List<Repository>) : UiState()
+    class Success(val data: List<RepositoryView>) : UiState()
     class Error(val failure: Failure) : UiState()
   }
 
