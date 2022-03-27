@@ -1,6 +1,6 @@
 package com.syphyr.dawn.githubexplorer.common.system
 
 sealed class Failure {
-  object ApiError : Failure()
+  class ApiError(val reason:String) : Failure()
   object EmptyResult : Failure()
 }

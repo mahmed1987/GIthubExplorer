@@ -30,7 +30,7 @@ fun NavGraphBuilder.addHomeGraph(
   backPress: () -> Unit
 ) {
   composable(Screens.REPOSITORY_LIBRARY.route) {
-    RepositoryLibrary(modifier, onRepositoryClicked)
+    RepositoryLibrary( onRepositoryClicked)
   }
   composable(Screens.REPOSITORY_DETAIL.route) { from ->
     val repositoryDetailsJson = from.arguments?.getString("selectedRepo")

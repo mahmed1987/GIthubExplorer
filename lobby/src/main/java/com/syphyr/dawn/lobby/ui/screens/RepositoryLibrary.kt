@@ -36,7 +36,6 @@ import com.syphyr.dawn.lobby.ui.viewmodel.GithubViewModel
 
 @Composable
 fun RepositoryLibrary(
-  modifier: Modifier = Modifier,
   onRepositoryClicked: (String) -> Unit,
   viewModel: GithubViewModel = hiltViewModel()
 ) {
@@ -155,8 +154,12 @@ fun ShowErrorUi(failure: Failure) {
       style = MaterialTheme.typography.subtitle1
     )
     Spacer(modifier = Modifier.height(10.dp))
+    val error = when (failure) {
+      is Failure.ApiError -> failure.reason
+      Failure.EmptyResult -> stringResource(id = R.string.empty_list_caption)
+    }
     Text(
-      text = stringResource(id = R.string.empty_list_caption),
+      text = error,
       textAlign = TextAlign.Center,
       style = MaterialTheme.typography.subtitle2
     )
