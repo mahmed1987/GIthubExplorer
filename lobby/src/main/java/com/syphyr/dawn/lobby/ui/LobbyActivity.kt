@@ -10,6 +10,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -30,7 +31,7 @@ class LobbyActivity : ComponentActivity() {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
           val appState = rememberAppState()
-          var showedSplash by remember {
+          var showedSplash by rememberSaveable {
             mutableStateOf(false)
           }
           if (!showedSplash) {
