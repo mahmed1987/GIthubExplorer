@@ -17,6 +17,8 @@
 1. The new SplashScreen API wasn't integrated , as a result of which the SplashScreen is shown on
    cold and warm starts. If I would integrate the new SplashScreen API the SplashScreen would only
    appear on cold starts.
+   
+2. The RepositoryDetails screen doesn't work well in Landscape orientation.
 
 This application takes the approach of extreme code isolation by distributing various components of
 the application in modules. The following modules together make the application
