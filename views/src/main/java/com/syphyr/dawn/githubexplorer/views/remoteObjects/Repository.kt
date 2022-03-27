@@ -11,19 +11,19 @@ class RepositoryResponse(
 class Repository(
   val id: Long,
   @SerializedName("full_name") val name: String,
-  val description: String,
+  val description: String?,
   val owner: Owner,
   @SerializedName("stargazers_count") val stargazersCount: Int,
   @SerializedName("forks") val forksCount: Int,
-  val language: String,
+  val language: String?,
   @SerializedName("open_issues") val issueCount: Int
 ) {
   fun toView() = RepositoryView(
     id = id,
     name = name,
     imageUrl = owner.imageUrl,
-    language = language,
-    description = description,
+    language = language ?: "Not Available",
+    description = description?:"Not Available",
     starredBy = stargazersCount,
     forksCount = forksCount,
     issuesCount = issueCount,

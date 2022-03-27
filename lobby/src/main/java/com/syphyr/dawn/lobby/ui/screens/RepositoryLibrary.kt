@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.google.gson.Gson
 import com.syphyr.dawn.githubexplorer.common.R
 import com.syphyr.dawn.githubexplorer.common.system.Failure
 import com.syphyr.dawn.githubexplorer.common.theme.GithubExplorerTheme
@@ -70,6 +71,7 @@ fun RepositoryLibrary(
   }
 
 }
+
 @Composable
 fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
   TextField(
@@ -91,6 +93,7 @@ fun SearchBox(value: String = "", onValueChange: (String) -> Unit) {
     },
   )
 }
+
 @Composable
 fun Content(viewModel: GithubViewModel, onRepositoryClicked: (String) -> Unit) {
   val uiState by viewModel.uiState.observeAsState()
@@ -123,9 +126,18 @@ fun ShowSuccessUi(
   }
 
 }
+
 @Composable
 fun ShowLoadingUi() {
+  Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    CircularProgressIndicator(modifier = Modifier.size(100.dp))
+  }
 }
+
 @Composable
 fun ShowErrorUi(failure: Failure) {
   Column(
@@ -151,6 +163,7 @@ fun ShowErrorUi(failure: Failure) {
   }
 
 }
+
 @Composable
 private fun ResultsCountItem(repositoryViews: List<RepositoryView>) {
   Text(
@@ -165,18 +178,18 @@ private fun ResultsCountItem(repositoryViews: List<RepositoryView>) {
 fun RepositoryItem(repositoryView: RepositoryView, onRepositoryClicked: (String) -> Unit) {
   Row(
     modifier = Modifier
-      .clickable(onClick = { onRepositoryClicked("") })
+      .clickable(onClick = { onRepositoryClicked(Gson().toJson(repositoryView)) })
       .fillMaxWidth(),
 
     ) {
     RemoteImage(
-      imageUrl = "https://source.unsplash.com/pGM4sjt_BdQ",
+      imageUrl = repositoryView.imageUrl,
       size = 45.dp
     )
     Spacer(modifier = Modifier.width(15.dp))
     Column() {
-      Text(text = "Tetris", style = MaterialTheme.typography.subtitle1)
-      Text(text = "This is a repo", style = MaterialTheme.typography.subtitle2)
+      Text(text = repositoryView.name, style = MaterialTheme.typography.subtitle1)
+      Text(text = repositoryView.description, style = MaterialTheme.typography.subtitle2)
     }
   }
 }
@@ -184,7 +197,7 @@ fun RepositoryItem(repositoryView: RepositoryView, onRepositoryClicked: (String)
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun RemoteImage(imageUrl: String,size:Dp) {
+fun RemoteImage(imageUrl: String, size: Dp) {
   Box(contentAlignment = Alignment.Center) {
     val painter = rememberImagePainter(data = imageUrl)
     Image(
@@ -218,17 +231,19 @@ fun PreviewRepositoryLibrary() {
 @Composable
 fun PreviewRepositoryItem() {
   GithubExplorerTheme {
-    RepositoryItem(RepositoryView(
-      1,
-      "This is something",
-      "",
-      "Achi Repo hai",
-      "Assembly",
-      33,
-      33,
-      33,
-      2.toDouble()
-    )) {}
+    RepositoryItem(
+      RepositoryView(
+        1,
+        "This is something",
+        "",
+        "Achi Repo hai",
+        "Assembly",
+        33,
+        33,
+        33,
+        2.toDouble()
+      )
+    ) {}
   }
 }
 

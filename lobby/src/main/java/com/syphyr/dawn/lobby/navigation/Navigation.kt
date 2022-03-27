@@ -4,6 +4,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.google.gson.Gson
 import com.syphyr.dawn.githubexplorer.common.destinations.Screens
 import com.syphyr.dawn.githubexplorer.common.destinations.TopLevelDestinations
 import com.syphyr.dawn.githubexplorer.views.repositories.RepositoryView
@@ -32,18 +33,12 @@ fun NavGraphBuilder.addHomeGraph(
     RepositoryLibrary(modifier, onRepositoryClicked)
   }
   composable(Screens.REPOSITORY_DETAIL.route) { from ->
-    val repositoryDetailsJson = from.arguments?.getString("selectedRepo") ?: "nothing"
-    RepositoryDetail(RepositoryView(
-      1,
-      repositoryDetailsJson,
-      "",
-      "Achi Repo hai",
-      "Assembly",
-      33,
-      33,
-      33,
-      2.toDouble()
-    ), backPress)
+    val repositoryDetailsJson = from.arguments?.getString("selectedRepo")
+    repositoryDetailsJson?.let {
+      val repositoryView = Gson().fromJson(it, RepositoryView::class.java)
+      RepositoryDetail(repositoryView, backPress)
+    }
+
   }
 
 }

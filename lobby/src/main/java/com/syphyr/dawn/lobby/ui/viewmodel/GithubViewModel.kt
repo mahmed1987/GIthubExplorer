@@ -25,7 +25,7 @@ class GithubViewModel @Inject constructor(
   private val searchQueryFlow: MutableStateFlow<String> = MutableStateFlow("")
 
   init {
-    _uiState.value = UiState.Error(Failure.NoResult)
+    _uiState.value = UiState.Error(Failure.EmptyResult)
     viewModelScope.launch {
       searchQueryFlow
         .debounce(500) // restricting abnormal amounts of access to the API.
@@ -38,7 +38,12 @@ class GithubViewModel @Inject constructor(
   }
 
   fun searchRepositories(query: String) {
-    searchQueryFlow.value = query
+    if (query.isEmpty()) {
+      _uiState.value = UiState.Error(Failure.EmptyResult)
+    } else {
+      searchQueryFlow.value = query
+    }
+
   }
 
   //
@@ -47,7 +52,10 @@ class GithubViewModel @Inject constructor(
       _uiState.value = UiState.Loading
       val result = searchRepository(StringArg(query))
       result.either(::handleFailure) {
-        _uiState.value = UiState.Success(it)
+        if (it.isNotEmpty())
+          _uiState.value = UiState.Success(it)
+        else
+          _uiState.value = UiState.Error(Failure.EmptyResult)
       }
     }
   }
