@@ -37,7 +37,7 @@ Actually , we need to have a module which has complete visibility of the system 
 
 Other than this module , no other module has complete visibility of the system rather they only work with what they require
 
-**Visibility**
+**Visibility- **
 All modules in the application
 
 
@@ -48,7 +48,7 @@ Here he is able to interact with the hotel, in application terms he is able to i
 
 This module can also be thought of as "UI" module. Contains the UI of the application
 
-**Visibility**
+**Visibility- **
 Can only see the business module
 
 
@@ -56,7 +56,7 @@ Can only see the business module
 
 Contains all the POJO kind of code that handles non-android related business logic for the application.
 
-**Visibility**
+**Visibility- **
 Can only see the repository module
 
 
@@ -64,7 +64,7 @@ Can only see the repository module
 
 Contains the repositories for various entities in the system . IRL this layer would also contain the databases
 
-**Visibility**
+**Visibility- ** 
 Can only see the network  module
 
 ###### networks
