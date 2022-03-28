@@ -32,9 +32,56 @@ the application in modules. The following modules together make the application
 
 ###### app
 
-The app module is mostly empty. 
+The app module is mostly empty and used for the initialization of the Hilt Container.
+Actually , we need to have a module which has complete visibility of the system (i.e. knows about all the modules of the system)
+
+Other than this module , no other module has complete visibility of the system rather they only work with what they require
+
+**Visibility**
+All modules in the application
+
+
+
+###### lobby
+The lobby module is so named because this is the is the place where the application user arrives akin to a hotel lobby.
+Here he is able to interact with the hotel, in application terms he is able to interact with the application.
+
+This module can also be thought of as "UI" module. Contains the UI of the application
+
+**Visibility**
+Can only see the business module
+
+
+###### business
+
+Contains all the POJO kind of code that handles non-android related business logic for the application.
+
+**Visibility**
+Can only see the repository module
+
+
+###### repository
+
+Contains the repositories for various entities in the system . IRL this layer would also contain the databases
+
+**Visibility**
+Can only see the network  module
+
+###### networks
+Contains retrofit. IRL would contain other network related code.
 
 ###### common
+Contains all the helpers, extensions ,themes , styles , fonts , colors and other things that would be perhaps needed by the entire application. 
+
+
+
+
+
+
+
+
+
+
 
 
 
